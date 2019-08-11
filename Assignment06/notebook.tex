@@ -1,0 +1,969 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{20146518\_Assignment06}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    Domain clustering using L2-norm \& L2-norm
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}57}]:} \PY{k+kn}{import} \PY{n+nn}{PIL}\PY{n+nn}{.}\PY{n+nn}{Image} \PY{k}{as} \PY{n+nn}{pilimg} \PY{c+c1}{\PYZsh{} for reading image}
+         \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+         \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+         \PY{o}{\PYZpc{}}\PY{k}{matplotlib} inline
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}58}]:} \PY{n}{x} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{l+m+mi}{225}\PY{p}{,}\PY{l+m+mi}{225}\PY{p}{)}\PY{p}{)}
+         \PY{n}{y} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{l+m+mi}{225}\PY{p}{,}\PY{l+m+mi}{225}\PY{p}{)}\PY{p}{)}
+         \PY{n}{size\PYZus{}row} \PY{o}{=} \PY{l+m+mi}{225}
+         \PY{n}{size\PYZus{}col} \PY{o}{=} \PY{l+m+mi}{225}
+         \PY{n}{i} \PY{o}{=} \PY{l+m+mi}{0}
+         \PY{k}{while}\PY{p}{(}\PY{n}{i} \PY{o}{\PYZlt{}} \PY{l+m+mi}{225}\PY{p}{)}\PY{p}{:}
+             \PY{n}{x}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{p}{:}\PY{p}{]} \PY{o}{=} \PY{n}{i}
+             \PY{n}{y}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{n}{i}\PY{p}{]} \PY{o}{=} \PY{n}{i}
+             \PY{n}{i} \PY{o}{=} \PY{n}{i}\PY{o}{+}\PY{l+m+mi}{1}
+         
+         \PY{n}{xy} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{(}\PY{n}{y}\PY{p}{,}\PY{n}{x}\PY{p}{)}\PY{p}{)}
+         \PY{n}{xy} \PY{o}{=} \PY{n}{xy}\PY{o}{.}\PY{n}{transpose}\PY{p}{(}\PY{p}{)}
+         \PY{n}{xy} \PY{o}{=} \PY{n}{xy}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{)}
+         \PY{n}{xy} \PY{o}{=} \PY{n}{xy}\PY{o}{.}\PY{n}{transpose}\PY{p}{(}\PY{p}{)}
+         \PY{n}{count} \PY{o}{=} \PY{n}{xy}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}59}]:} \PY{k}{def} \PY{n+nf}{Distance}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{y}\PY{p}{)}\PY{p}{:}
+         
+             \PY{n}{d} \PY{o}{=} \PY{p}{(}\PY{n}{x} \PY{o}{\PYZhy{}} \PY{n}{y}\PY{p}{)} \PY{o}{*}\PY{o}{*} \PY{l+m+mi}{2}   
+             \PY{n}{s} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{d}\PY{p}{)}
+         
+             \PY{k}{return}\PY{p}{(}\PY{n}{s}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}60}]:} \PY{k}{def} \PY{n+nf}{generateCluster}\PY{p}{(}\PY{n}{cluster\PYZus{}num}\PY{p}{,} \PY{n}{image\PYZus{}num}\PY{p}{)}\PY{p}{:}\PY{c+c1}{\PYZsh{} K\PYZhy{}means알고리즘을 시작하기 위한 함수}
+             
+             \PY{c+c1}{\PYZsh{} 클러스터의 개수}
+             \PY{n}{k} \PY{o}{=} \PY{n}{cluster\PYZus{}num}
+             \PY{c+c1}{\PYZsh{} 각 픽셀에 대해 소속 클러스터를 표시하기 위한 라벨}
+             \PY{n}{cluster\PYZus{}label} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{n}{image\PYZus{}num}\PY{p}{)}                   
+             \PY{c+c1}{\PYZsh{} 클러스터 마다의 centroid}
+             \PY{n}{average\PYZus{}image} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,} \PY{n}{cluster\PYZus{}num}\PY{p}{)}\PY{p}{,} \PY{n}{dtype}\PY{o}{=}\PY{n+nb}{int}\PY{p}{)} 
+             \PY{c+c1}{\PYZsh{} centroid와 각 pixel간의 distance를 담은 배열   }
+             \PY{n}{distance} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{n}{cluster\PYZus{}num}\PY{p}{,} \PY{n}{image\PYZus{}num}\PY{p}{)}\PY{p}{,} \PY{n}{dtype}\PY{o}{=}\PY{n+nb}{float}\PY{p}{)}
+             
+             \PY{k}{return} \PY{n}{k}\PY{p}{,} \PY{n}{cluster\PYZus{}label}\PY{p}{,} \PY{n}{average\PYZus{}image}\PY{p}{,} \PY{n}{distance}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}61}]:} \PY{k}{def} \PY{n+nf}{initializeLabel}\PY{p}{(}\PY{n}{cluster\PYZus{}num}\PY{p}{,} \PY{n}{cluster\PYZus{}label}\PY{p}{)}\PY{p}{:} \PY{c+c1}{\PYZsh{} 클러스터링 라벨 초기화}
+             \PY{n}{random\PYZus{}seed}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{rand}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{cluster\PYZus{}label}\PY{p}{)}\PY{p}{)}\PY{o}{*}\PY{l+m+mi}{100} 
+             \PY{c+c1}{\PYZsh{}variable that will be substituted to the label}
+             
+             \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{cluster\PYZus{}label}\PY{p}{)}\PY{p}{)}\PY{p}{:}                   
+                 \PY{n}{random\PYZus{}seed}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{=} \PY{n+nb}{int}\PY{p}{(}\PY{n}{random\PYZus{}seed}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{)}
+                 \PY{n}{random\PYZus{}seed}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{=} \PY{n}{random\PYZus{}seed}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{\PYZpc{}} \PY{n}{cluster\PYZus{}num} \PY{c+c1}{\PYZsh{} 랜덤하게 초기화}
+             \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{cluster\PYZus{}label}\PY{p}{)}\PY{p}{)}\PY{p}{:}                       
+                 \PY{n}{cluster\PYZus{}label}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{=} \PY{n}{random\PYZus{}seed}\PY{p}{[}\PY{n}{i}\PY{p}{]}
+             \PY{k}{return}
+         
+         \PY{k}{def} \PY{n+nf}{computeCentroid}\PY{p}{(}\PY{n}{cluster\PYZus{}num}\PY{p}{,} \PY{n}{list\PYZus{}image}\PY{p}{,}\PY{n}{cluster\PYZus{}label}\PY{p}{)}\PY{p}{:}  \PY{c+c1}{\PYZsh{}compute the average(center) of }
+                                                         \PY{c+c1}{\PYZsh{}listimage sharing  same label}
+             \PY{n+nb}{sum} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{l+m+mi}{2} \PY{p}{,}\PY{n}{cluster\PYZus{}num}\PY{p}{)}\PY{p}{)}      \PY{c+c1}{\PYZsh{} 각 클러스터의 픽셀 값의 합}
+             \PY{n}{num} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{n}{cluster\PYZus{}num}\PY{p}{)}           \PY{c+c1}{\PYZsh{} 각 클러스터의 픽셀 개수(dividance)}
+             
+             \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{list\PYZus{}image}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{p}{:} \PY{c+c1}{\PYZsh{} 전체 픽셀 개수만큼 진행       }
+                 \PY{n+nb}{sum}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{n+nb}{int}\PY{p}{(}\PY{n}{cluster\PYZus{}label}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{)}\PY{p}{]} \PY{o}{=} \PY{n+nb}{sum}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{n+nb}{int}\PY{p}{(}\PY{n}{cluster\PYZus{}label}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{)}\PY{p}{]} \PY{o}{+} \PY{n}{list\PYZus{}image}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{n}{i}\PY{p}{]}
+                 \PY{c+c1}{\PYZsh{} must change the type of label[i] to type(int)}
+                 \PY{n}{num}\PY{p}{[}\PY{n+nb}{int}\PY{p}{(}\PY{n}{cluster\PYZus{}label}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{)}\PY{p}{]} \PY{o}{=} \PY{n}{num}\PY{p}{[}\PY{n+nb}{int}\PY{p}{(}\PY{n}{cluster\PYZus{}label}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{)}\PY{p}{]}\PY{o}{+}\PY{l+m+mi}{1}
+                 \PY{c+c1}{\PYZsh{} count the number}
+             \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{cluster\PYZus{}num}\PY{p}{)}\PY{p}{:}
+                 \PY{n+nb}{sum}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{n}{i}\PY{p}{]} \PY{o}{/}\PY{o}{=} \PY{n}{num}\PY{p}{[}\PY{n}{i}\PY{p}{]}                         \PY{c+c1}{\PYZsh{} sum goes to be a mean value}
+             \PY{k}{return} \PY{n+nb}{sum}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}62}]:} \PY{k}{def} \PY{n+nf}{assignLabel}\PY{p}{(}\PY{n}{list\PYZus{}image}\PY{p}{,}\PY{n}{average\PYZus{}image}\PY{p}{,}\PY{n}{label}\PY{p}{,}\PY{n}{distance}\PY{p}{)}\PY{p}{:} \PY{c+c1}{\PYZsh{}compute the distance }
+                                                         \PY{c+c1}{\PYZsh{}average images and images. }
+                                                         \PY{c+c1}{\PYZsh{}And update the label of points}
+             \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{list\PYZus{}image}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{p}{:}
+                 \PY{k}{for} \PY{n}{j} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{average\PYZus{}image}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{p}{:}
+                     \PY{n}{distance}\PY{p}{[}\PY{n}{j}\PY{p}{,}\PY{n}{i}\PY{p}{]}\PY{o}{=}\PY{n}{Distance}\PY{p}{(}\PY{n}{average\PYZus{}image}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{n}{j}\PY{p}{]}\PY{p}{,}\PY{n}{list\PYZus{}image}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{n}{i}\PY{p}{]}\PY{p}{)}
+             \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{list\PYZus{}image}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{p}{:}
+                 \PY{k}{for} \PY{n}{j} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{average\PYZus{}image}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{p}{:}               
+                     \PY{k}{if} \PY{n}{distance}\PY{p}{[}\PY{n}{j}\PY{p}{,}\PY{n}{i}\PY{p}{]}\PY{o}{==}\PY{n}{distance}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{n}{i}\PY{p}{]}\PY{o}{.}\PY{n}{min}\PY{p}{(}\PY{p}{)}\PY{p}{:}  \PY{c+c1}{\PYZsh{}when thd distance is minimum}
+                         \PY{n}{label}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{o}{=}\PY{n}{j}                          \PY{c+c1}{\PYZsh{}update label}
+             \PY{k}{return}
+         
+         \PY{k}{def} \PY{n+nf}{represent}\PY{p}{(}\PY{n}{label}\PY{p}{,}\PY{n}{list\PYZus{}label}\PY{p}{,}\PY{n}{num}\PY{p}{)}\PY{p}{:}\PY{c+c1}{\PYZsh{}num : 0 \PYZti{} k\PYZhy{}1. we don\PYZsq{}t know what the most number }
+                                             \PY{c+c1}{\PYZsh{}in the cluster(num)\PYZsq{}s is. this funstion }
+                                             \PY{c+c1}{\PYZsh{}will return the most number of certain cluster.}
+             \PY{n}{num\PYZus{}arr}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{)}
+             \PY{n}{num\PYZus{}rep}\PY{o}{=}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}
+             \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{label}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+                 \PY{k}{if}\PY{p}{(}\PY{n}{label}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{o}{==}\PY{n}{num}\PY{p}{)}\PY{p}{:}
+                     \PY{n}{num\PYZus{}arr}\PY{p}{[}\PY{n}{list\PYZus{}label}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{]}\PY{o}{+}\PY{o}{=}\PY{l+m+mi}{1}
+             \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{)}\PY{p}{:}
+                 \PY{k}{if}\PY{p}{(}\PY{n}{num\PYZus{}arr}\PY{o}{.}\PY{n}{max}\PY{p}{(}\PY{p}{)}\PY{o}{==}\PY{n}{num\PYZus{}arr}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{)}\PY{p}{:}
+                     \PY{n}{num\PYZus{}rep}\PY{o}{=}\PY{n}{i}
+             \PY{k}{return} \PY{n}{num\PYZus{}rep}                  \PY{c+c1}{\PYZsh{}return the number that appeared the most}
+         
+         \PY{c+c1}{\PYZsh{} def computeAccuracy(label,list\PYZus{}label,cluster\PYZus{}num): \PYZsh{}compute the accuracy}
+         \PY{c+c1}{\PYZsh{}     sum=0}
+         \PY{c+c1}{\PYZsh{}     num\PYZus{}arr=np.zeros(10)}
+         \PY{c+c1}{\PYZsh{}     for j in range(cluster\PYZus{}num):}
+         \PY{c+c1}{\PYZsh{}         num=0}
+         \PY{c+c1}{\PYZsh{}         for ii in range(10):}
+         \PY{c+c1}{\PYZsh{}             num\PYZus{}arr[ii]=0}
+         \PY{c+c1}{\PYZsh{}         for i in range(len(label)):}
+         \PY{c+c1}{\PYZsh{}             if(label[i]==j):}
+         \PY{c+c1}{\PYZsh{}                 num\PYZus{}arr[list\PYZus{}label[i]]+=1}
+         \PY{c+c1}{\PYZsh{}                 num+=1}
+         \PY{c+c1}{\PYZsh{}         sum+=num\PYZus{}arr.max()/num}
+         \PY{c+c1}{\PYZsh{}     return 100*sum/cluster\PYZus{}num  \PYZsh{}accuracy will be returned }
+         
+         \PY{k}{def} \PY{n+nf}{plotEnergyAndAccuracy}\PY{p}{(}\PY{n}{energy}\PY{p}{,}\PY{n}{accuracy}\PY{p}{)}\PY{p}{:} \PY{c+c1}{\PYZsh{}plot the energy and accuracy}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{)}
+             \PY{n}{x}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{n+nb}{len}\PY{p}{(}\PY{n}{energy}\PY{p}{)}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{energy}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{b}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{energy}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{accuracy}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{r}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{accuracy}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{number of iterations}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{n}{bbox\PYZus{}to\PYZus{}anchor}\PY{o}{=}\PY{p}{(}\PY{l+m+mf}{1.05}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,} \PY{n}{loc}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{,} \PY{n}{borderaxespad}\PY{o}{=}\PY{l+m+mf}{0.}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+             
+         \PY{k}{def} \PY{n+nf}{plotEnergy}\PY{p}{(}\PY{n}{energy}\PY{p}{)}\PY{p}{:} \PY{c+c1}{\PYZsh{}plot the energy}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{)}
+             \PY{n}{x} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{n+nb}{len}\PY{p}{(}\PY{n}{energy}\PY{p}{)}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Energy Curve}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{energy}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{b}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{energy}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{number of iterations}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{n}{bbox\PYZus{}to\PYZus{}anchor}\PY{o}{=}\PY{p}{(}\PY{l+m+mf}{1.05}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,} \PY{n}{loc}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{,} \PY{n}{borderaxespad}\PY{o}{=}\PY{l+m+mf}{0.}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}63}]:} \PY{k}{def} \PY{n+nf}{plotCentoidImages}\PY{p}{(}\PY{n}{average\PYZus{}pixel}\PY{p}{,} \PY{n}{cluster\PYZus{}label}\PY{p}{)}\PY{p}{:}  
+             \PY{c+c1}{\PYZsh{} draw image using average\PYZus{}pixels }
+             
+             \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{)}
+             \PY{c+c1}{\PYZsh{} centroid pixel로만 만들 이미지 배열}
+             \PY{n}{output\PYZus{}pixel} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{,} \PY{n}{count}\PY{p}{)}\PY{p}{,} \PY{n}{dtype}\PY{o}{=}\PY{n+nb}{int}\PY{p}{)} 
+             \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{count}\PY{p}{)}\PY{p}{:}
+                 \PY{n}{output\PYZus{}pixel}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{n}{i}\PY{p}{]} \PY{o}{=} \PY{n}{average\PYZus{}pixel}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{n+nb}{int}\PY{p}{(}\PY{n}{cluster\PYZus{}label}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{)}\PY{p}{]}
+         
+             \PY{n}{output\PYZus{}pixel} \PY{o}{=} \PY{n}{output\PYZus{}pixel}\PY{o}{.}\PY{n}{transpose}\PY{p}{(}\PY{p}{)}
+             \PY{n}{output\PYZus{}pixel} \PY{o}{=} \PY{n}{output\PYZus{}pixel}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{n}{size\PYZus{}row}\PY{p}{,} \PY{n}{size\PYZus{}col}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{output image}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{imshow}\PY{p}{(}\PY{n}{output\PYZus{}pixel}\PY{p}{)}
+             \PY{k}{return}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}64}]:} \PY{k}{def} \PY{n+nf}{computeEnergy}\PY{p}{(}\PY{n}{distance}\PY{p}{)}\PY{p}{:}        \PY{c+c1}{\PYZsh{}compute the Energy}
+             \PY{n}{energy\PYZus{}sum}\PY{o}{=}\PY{l+m+mi}{0}
+             \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{distance}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{p}{:}
+                 \PY{n}{energy\PYZus{}sum}\PY{o}{+}\PY{o}{=}\PY{n}{distance}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{n}{i}\PY{p}{]}\PY{o}{.}\PY{n}{min}\PY{p}{(}\PY{p}{)} \PY{c+c1}{\PYZsh{}add all of the distance between}
+                                      \PY{c+c1}{\PYZsh{}images and corresponding average images(center)}
+             \PY{k}{return} \PY{n}{energy\PYZus{}sum}\PY{o}{/}\PY{n}{distance}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}65}]:} \PY{k}{def} \PY{n+nf}{visualization}\PY{p}{(}\PY{n}{average\PYZus{}image}\PY{p}{,}\PY{n}{k}\PY{p}{)}\PY{p}{:}
+             \PY{n}{final\PYZus{}image} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{,}\PY{n}{k}\PY{p}{)}\PY{p}{,} \PY{n}{dtype} \PY{o}{=} \PY{n+nb}{int}\PY{p}{)}
+             \PY{n}{color\PYZus{}red} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{244}\PY{p}{,} \PY{l+m+mi}{67}\PY{p}{,} \PY{l+m+mi}{54}\PY{p}{]}
+             \PY{n}{color\PYZus{}purple} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{171}\PY{p}{,} \PY{l+m+mi}{71}\PY{p}{,} \PY{l+m+mi}{188}\PY{p}{]}
+             \PY{n}{color\PYZus{}blue} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{66}\PY{p}{,} \PY{l+m+mi}{165}\PY{p}{,} \PY{l+m+mi}{245}\PY{p}{]}
+             \PY{n}{color\PYZus{}sky} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{77}\PY{p}{,} \PY{l+m+mi}{208}\PY{p}{,} \PY{l+m+mi}{225}\PY{p}{]}
+             \PY{n}{color\PYZus{}green} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{102}\PY{p}{,} \PY{l+m+mi}{187}\PY{p}{,} \PY{l+m+mi}{106}\PY{p}{]}
+             \PY{n}{color\PYZus{}yellow} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{255}\PY{p}{,} \PY{l+m+mi}{238}\PY{p}{,} \PY{l+m+mi}{88}\PY{p}{]}
+             \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{k}\PY{p}{)}\PY{p}{:}
+                 \PY{k}{if}\PY{p}{(}\PY{n}{i} \PY{o}{==} \PY{l+m+mi}{0}\PY{p}{)}\PY{p}{:}
+                     \PY{n}{final\PYZus{}image}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{n}{i}\PY{p}{]} \PY{o}{=} \PY{n}{color\PYZus{}red}
+                 \PY{k}{if}\PY{p}{(}\PY{n}{i} \PY{o}{==} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{:}
+                     \PY{n}{final\PYZus{}image}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{n}{i}\PY{p}{]} \PY{o}{=} \PY{n}{color\PYZus{}purple}
+                 \PY{k}{if}\PY{p}{(}\PY{n}{i} \PY{o}{==} \PY{l+m+mi}{2}\PY{p}{)}\PY{p}{:}
+                     \PY{n}{final\PYZus{}image}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{n}{i}\PY{p}{]} \PY{o}{=} \PY{n}{color\PYZus{}green}
+                 \PY{k}{if}\PY{p}{(}\PY{n}{i} \PY{o}{==} \PY{l+m+mi}{3}\PY{p}{)}\PY{p}{:}
+                     \PY{n}{final\PYZus{}image}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{n}{i}\PY{p}{]} \PY{o}{=} \PY{n}{color\PYZus{}blue}
+                 \PY{k}{if}\PY{p}{(}\PY{n}{i} \PY{o}{==} \PY{l+m+mi}{4}\PY{p}{)}\PY{p}{:}
+                     \PY{n}{final\PYZus{}image}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{n}{i}\PY{p}{]} \PY{o}{=} \PY{n}{color\PYZus{}yellow}
+                 \PY{k}{if}\PY{p}{(}\PY{n}{i} \PY{o}{==} \PY{l+m+mi}{5}\PY{p}{)}\PY{p}{:}
+                     \PY{n}{final\PYZus{}image}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{n}{i}\PY{p}{]} \PY{o}{=} \PY{n}{color\PYZus{}sky}
+             \PY{k}{return} \PY{n}{final\PYZus{}image}
+\end{Verbatim}
+
+
+    Use L2-norm
+
+    K=2
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}66}]:} \PY{n}{k}\PY{p}{,}\PY{n}{cluster\PYZus{}label}\PY{p}{,}\PY{n}{average\PYZus{}image}\PY{p}{,}\PY{n}{distance}\PY{o}{=}\PY{n}{generateCluster}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,} \PY{n}{count}\PY{p}{)} \PY{c+c1}{\PYZsh{}2 \PYZhy{} cluster}
+         \PY{n}{initializeLabel}\PY{p}{(}\PY{n}{k}\PY{p}{,}\PY{n}{cluster\PYZus{}label}\PY{p}{)}
+         \PY{n}{average\PYZus{}image}\PY{o}{=}\PY{n}{computeCentroid}\PY{p}{(}\PY{n}{k}\PY{p}{,}\PY{n}{xy}\PY{p}{,}\PY{n}{cluster\PYZus{}label}\PY{p}{)}
+         \PY{n}{pre\PYZus{}average\PYZus{}image}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{,} \PY{n}{dtype}\PY{o}{=}\PY{n+nb}{int}\PY{p}{)}
+         \PY{n}{energy}\PY{o}{=}\PY{p}{[}\PY{p}{]}
+         \PY{n}{accuracy}\PY{o}{=}\PY{p}{[}\PY{p}{]}
+         \PY{n}{num\PYZus{}iteration}\PY{o}{=}\PY{l+m+mi}{0}
+         \PY{k}{while} \PY{o+ow}{not} \PY{n}{np}\PY{o}{.}\PY{n}{array\PYZus{}equal}\PY{p}{(}\PY{n}{pre\PYZus{}average\PYZus{}image}\PY{p}{,}\PY{n}{average\PYZus{}image}\PY{p}{)}\PY{p}{:}
+             \PY{n}{assignLabel}\PY{p}{(}\PY{n}{xy}\PY{p}{,}\PY{n}{average\PYZus{}image}\PY{p}{,}\PY{n}{cluster\PYZus{}label}\PY{p}{,}\PY{n}{distance}\PY{p}{)}
+             \PY{n}{pre\PYZus{}average\PYZus{}image}\PY{o}{=}\PY{n}{average\PYZus{}image}
+             \PY{n}{average\PYZus{}image}\PY{o}{=}\PY{n}{computeCentroid}\PY{p}{(}\PY{n}{k}\PY{p}{,}\PY{n}{xy}\PY{p}{,}\PY{n}{cluster\PYZus{}label}\PY{p}{)}
+             \PY{n}{energy}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{computeEnergy}\PY{p}{(}\PY{n}{distance}\PY{p}{)}\PY{p}{)}
+             \PY{n}{num\PYZus{}iteration}\PY{o}{+}\PY{o}{=}\PY{l+m+mi}{1}
+             \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{k}\PY{p}{)}\PY{p}{:}
+                 \PY{n+nb}{print}\PY{p}{(}\PY{n}{num\PYZus{}iteration} \PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Centroid}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{i}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{average\PYZus{}image}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{,}\PY{n}{average\PYZus{}image}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{)}
+         \PY{n}{average\PYZus{}image}\PY{o}{=}\PY{n}{visualization}\PY{p}{(}\PY{n}{average\PYZus{}image}\PY{p}{,}\PY{n}{k}\PY{p}{)}
+         \PY{n}{plotCentoidImages}\PY{p}{(}\PY{n}{average\PYZus{}image}\PY{p}{,}\PY{n}{cluster\PYZus{}label}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+1 Centroid 1 : 61.892857142857146 133.46554993678888
+1 Centroid 2 : 162.10516335479792 90.53529806818631
+2 Centroid 1 : 59.17730720606827 128.03445006321112
+2 Centroid 2 : 164.82060601272073 95.96618338403192
+3 Centroid 1 : 57.473707083876576 123.38003239698155
+3 Centroid 2 : 166.51983092359959 100.62131626767797
+4 Centroid 1 : 56.56558154235145 119.82458912768648
+4 Centroid 2 : 167.43222849919013 104.17571998577806
+5 Centroid 1 : 56.1218394437421 117.28618836915297
+5 Centroid 2 : 167.8759530675937 106.7140204637933
+6 Centroid 1 : 55.9150962032318 115.55039310971515
+6 Centroid 2 : 168.07825709093783 108.45002765268231
+7 Centroid 1 : 55.82201414404804 114.37126150685472
+7 Centroid 2 : 168.17132811882752 109.62901951489295
+8 Centroid 1 : 55.780609221287186 113.58717553632808
+8 Centroid 2 : 168.21272813462906 110.41301256221854
+9 Centroid 1 : 55.76414348925411 113.05578381795196
+9 Centroid 2 : 168.23363489116264 110.94425789120216
+10 Centroid 1 : 55.75560998735777 112.68884323640961
+10 Centroid 2 : 168.24216805593963 111.31118397661281
+11 Centroid 1 : 55.752449431099876 112.48759481668773
+11 Centroid 2 : 168.24532848733853 111.51242444593687
+12 Centroid 1 : 55.75 112.25
+12 Centroid 2 : 168.24777782167266 111.75000987634812
+13 Centroid 1 : 55.75 112.25
+13 Centroid 2 : 168.24777782167266 111.75000987634812
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_12_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    K=3
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}67}]:} \PY{n}{k}\PY{p}{,}\PY{n}{cluster\PYZus{}label}\PY{p}{,}\PY{n}{average\PYZus{}image}\PY{p}{,}\PY{n}{distance}\PY{o}{=}\PY{n}{generateCluster}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{,} \PY{n}{count}\PY{p}{)} \PY{c+c1}{\PYZsh{}3 \PYZhy{} cluster}
+         \PY{n}{initializeLabel}\PY{p}{(}\PY{n}{k}\PY{p}{,}\PY{n}{cluster\PYZus{}label}\PY{p}{)}
+         \PY{n}{average\PYZus{}image}\PY{o}{=}\PY{n}{computeCentroid}\PY{p}{(}\PY{n}{k}\PY{p}{,}\PY{n}{xy}\PY{p}{,}\PY{n}{cluster\PYZus{}label}\PY{p}{)}
+         \PY{n}{pre\PYZus{}average\PYZus{}image}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{,} \PY{n}{dtype}\PY{o}{=}\PY{n+nb}{int}\PY{p}{)}
+         \PY{n}{energy}\PY{o}{=}\PY{p}{[}\PY{p}{]}
+         \PY{n}{accuracy}\PY{o}{=}\PY{p}{[}\PY{p}{]}
+         \PY{n}{num\PYZus{}iteration}\PY{o}{=}\PY{l+m+mi}{0}
+         \PY{k}{while} \PY{o+ow}{not} \PY{n}{np}\PY{o}{.}\PY{n}{array\PYZus{}equal}\PY{p}{(}\PY{n}{pre\PYZus{}average\PYZus{}image}\PY{p}{,}\PY{n}{average\PYZus{}image}\PY{p}{)}\PY{p}{:}
+             \PY{n}{assignLabel}\PY{p}{(}\PY{n}{xy}\PY{p}{,}\PY{n}{average\PYZus{}image}\PY{p}{,}\PY{n}{cluster\PYZus{}label}\PY{p}{,}\PY{n}{distance}\PY{p}{)}
+             \PY{n}{pre\PYZus{}average\PYZus{}image}\PY{o}{=}\PY{n}{average\PYZus{}image}
+             \PY{n}{average\PYZus{}image}\PY{o}{=}\PY{n}{computeCentroid}\PY{p}{(}\PY{n}{k}\PY{p}{,}\PY{n}{xy}\PY{p}{,}\PY{n}{cluster\PYZus{}label}\PY{p}{)}
+             \PY{n}{energy}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{computeEnergy}\PY{p}{(}\PY{n}{distance}\PY{p}{)}\PY{p}{)}
+             \PY{n}{num\PYZus{}iteration}\PY{o}{+}\PY{o}{=}\PY{l+m+mi}{1}
+             \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{k}\PY{p}{)}\PY{p}{:}
+                 \PY{n+nb}{print}\PY{p}{(}\PY{n}{num\PYZus{}iteration} \PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Centroid}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{i}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{average\PYZus{}image}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{,}\PY{n}{average\PYZus{}image}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{)}
+         \PY{n}{average\PYZus{}image}\PY{o}{=}\PY{n}{visualization}\PY{p}{(}\PY{n}{average\PYZus{}image}\PY{p}{,}\PY{n}{k}\PY{p}{)}
+         \PY{n}{plotCentoidImages}\PY{p}{(}\PY{n}{average\PYZus{}image}\PY{p}{,}\PY{n}{cluster\PYZus{}label}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+1 Centroid 1 : 184.49120449548008 111.3796726117762
+1 Centroid 2 : 72.10969426176013 162.61288217279983
+1 Centroid 3 : 84.63492395702525 42.375191851541786
+2 Centroid 1 : 182.88560760353022 115.94421814890246
+2 Centroid 2 : 69.90567335243553 166.48154727793695
+2 Centroid 3 : 78.5508742499516 46.16213949287051
+3 Centroid 1 : 181.5910455910456 116.5906087906088
+3 Centroid 2 : 68.57494216486059 168.59107512480213
+3 Centroid 3 : 76.66507177033493 48.18471417778897
+4 Centroid 1 : 180.92947617003006 116.47928295405754
+4 Centroid 2 : 68.06072545340838 169.69155722326454
+4 Centroid 3 : 75.65025307754796 49.140161219771294
+5 Centroid 1 : 180.61751716064492 116.17458628212633
+5 Centroid 2 : 67.97898867160306 170.2858046959053
+5 Centroid 3 : 74.94972241282515 49.65660283201297
+6 Centroid 1 : 180.47083752714943 115.80309371192456
+6 Centroid 2 : 68.0950139913508 170.64767234800306
+6 Centroid 3 : 74.42124313529706 49.97010733899151
+7 Centroid 1 : 180.39266656099753 115.44333491837058
+7 Centroid 2 : 68.26927488212056 170.8887472919587
+7 Centroid 3 : 73.99962509372656 50.17970507373157
+8 Centroid 1 : 180.36164600369295 115.1095753099446
+8 Centroid 2 : 68.4842185806287 171.07913026844355
+8 Centroid 3 : 73.63526615374992 50.35741540001251
+9 Centroid 1 : 180.31825125098763 114.83065578087964
+9 Centroid 2 : 68.63672323593212 171.22591552890137
+9 Centroid 3 : 73.3337091319053 50.4913566328448
+10 Centroid 1 : 180.32722389003 114.53310159582873
+10 Centroid 2 : 68.87645033788091 171.36421012367717
+10 Centroid 3 : 73.07741975927783 50.610644433299896
+11 Centroid 1 : 180.33270152161322 114.26578213025851
+11 Centroid 2 : 69.07146952035161 171.462513535894
+11 Centroid 3 : 72.84177493252997 50.709847486349084
+12 Centroid 1 : 180.33880817014108 114.03016424510423
+12 Centroid 2 : 69.2591343093571 171.55786123488224
+12 Centroid 3 : 72.63163515296186 50.80149506878573
+13 Centroid 1 : 180.33873684210528 113.81273684210527
+13 Centroid 2 : 69.42935301227813 171.6499141166741
+13 Centroid 3 : 72.43832516031686 50.886017854897524
+14 Centroid 1 : 180.34987893462468 113.62090746394357
+14 Centroid 2 : 69.57856598016781 171.7210780574625
+14 Centroid 3 : 72.29336269267066 50.954010695187165
+15 Centroid 1 : 180.34806862435534 113.45926744553205
+15 Centroid 2 : 69.70904816368027 171.78815605540728
+15 Centroid 3 : 72.14006924771797 51.01951526597419
+16 Centroid 1 : 180.34564588266247 113.30902394106813
+16 Centroid 2 : 69.84422844800203 171.8637951845499
+16 Centroid 3 : 71.98897915485861 51.089741167579824
+17 Centroid 1 : 180.34883720930233 113.16600021045986
+17 Centroid 2 : 69.94978096628786 171.90895816138658
+17 Centroid 3 : 71.87490547012857 51.136186034786995
+18 Centroid 1 : 180.3520282001368 113.04224759299206
+18 Centroid 2 : 70.03483502538072 171.94511421319797
+18 Centroid 3 : 71.78080464119057 51.17612561483163
+19 Centroid 1 : 180.35081811964014 112.9406534434682
+19 Centroid 2 : 70.11650177574835 171.97983257229833
+19 Centroid 3 : 71.7018927444795 51.202460567823344
+20 Centroid 1 : 180.34629142556548 112.84829037348764
+20 Centroid 2 : 70.19057883725354 172.01128510746213
+20 Centroid 3 : 71.61349577073602 51.23216765559904
+21 Centroid 1 : 180.350044715661 112.76184965016571
+21 Centroid 2 : 70.2698060590696 172.04633033337558
+21 Centroid 3 : 71.53737845687587 51.2667634802374
+22 Centroid 1 : 180.35093902888104 112.67415434794044
+22 Centroid 2 : 70.36626322793232 172.08877764400228
+22 Centroid 3 : 71.44041679823177 51.30685191032523
+23 Centroid 1 : 180.35128879537086 112.59526564965807
+23 Centroid 2 : 70.45203396274236 172.12964136357877
+23 Centroid 3 : 71.347691530348 51.34933367018253
+24 Centroid 1 : 180.34639457213484 112.50980907799926
+24 Centroid 2 : 70.50300766162223 172.13322358006712
+24 Centroid 3 : 71.28263480624565 51.352866805739936
+25 Centroid 1 : 180.34744648398464 112.44569505075475
+25 Centroid 2 : 70.55024044545685 172.1294608959757
+25 Centroid 3 : 71.23469129554655 51.3496963562753
+26 Centroid 1 : 180.34791984431703 112.39636038499974
+26 Centroid 2 : 70.58332806274113 172.13243944089558
+26 Centroid 3 : 71.2013163723815 51.35257262198595
+27 Centroid 1 : 180.34548227621752 112.35600084148523
+27 Centroid 2 : 70.60805513404148 172.13657056145675
+27 Centroid 3 : 71.17277619499842 51.35492244381133
+28 Centroid 1 : 180.34267683407836 112.3145937417828
+28 Centroid 2 : 70.63091024020227 172.14551201011378
+28 Centroid 3 : 71.14648511716275 51.36136795440152
+29 Centroid 1 : 180.34106325918916 112.30399116579902
+29 Centroid 2 : 70.63333544023766 172.14171038493143
+29 Centroid 3 : 71.13219737758915 51.36257680369925
+30 Centroid 1 : 180.35649658074698 112.27201472908995
+30 Centroid 2 : 70.67220467466835 172.13878711307643
+30 Centroid 3 : 71.12334494773519 51.362179284130505
+31 Centroid 1 : 180.35500499710693 112.2564830887381
+31 Centroid 2 : 70.67841576653402 172.14193670646202
+31 Centroid 3 : 71.11201926123044 51.366216815561046
+32 Centroid 1 : 180.35191710934623 112.24851417451218
+32 Centroid 2 : 70.67841576653402 172.14193670646202
+32 Centroid 3 : 71.10189468348014 51.36810088080603
+33 Centroid 1 : 180.35039183716404 112.2399936885289
+33 Centroid 2 : 70.68456291056089 172.1449595755432
+33 Centroid 3 : 71.09759188846641 51.36768060836502
+34 Centroid 1 : 180.35263794645206 112.23039293040871
+34 Centroid 2 : 70.69571807502842 172.14892004547178
+34 Centroid 3 : 71.09759188846641 51.36768060836502
+35 Centroid 1 : 180.35232233969808 112.22313397506707
+35 Centroid 2 : 70.70072623934323 172.1498579096937
+35 Centroid 3 : 71.09297167120857 51.36783066100514
+36 Centroid 1 : 180.3542346133614 112.2197790636507
+36 Centroid 2 : 70.70535488759788 172.15010103561505
+36 Centroid 3 : 71.09297167120857 51.36783066100514
+37 Centroid 1 : 180.3542346133614 112.2197790636507
+37 Centroid 2 : 70.70535488759788 172.15010103561505
+37 Centroid 3 : 71.09297167120857 51.36783066100514
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_14_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    K=4
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}68}]:} \PY{n}{k}\PY{p}{,}\PY{n}{cluster\PYZus{}label}\PY{p}{,}\PY{n}{average\PYZus{}image}\PY{p}{,}\PY{n}{distance}\PY{o}{=}\PY{n}{generateCluster}\PY{p}{(}\PY{l+m+mi}{4}\PY{p}{,} \PY{n}{count}\PY{p}{)} \PY{c+c1}{\PYZsh{}4 \PYZhy{} cluster}
+         \PY{n}{initializeLabel}\PY{p}{(}\PY{n}{k}\PY{p}{,}\PY{n}{cluster\PYZus{}label}\PY{p}{)}
+         \PY{n}{average\PYZus{}image}\PY{o}{=}\PY{n}{computeCentroid}\PY{p}{(}\PY{n}{k}\PY{p}{,}\PY{n}{xy}\PY{p}{,}\PY{n}{cluster\PYZus{}label}\PY{p}{)}
+         \PY{n}{pre\PYZus{}average\PYZus{}image}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{,} \PY{n}{dtype}\PY{o}{=}\PY{n+nb}{int}\PY{p}{)}
+         \PY{n}{energy}\PY{o}{=}\PY{p}{[}\PY{p}{]}
+         \PY{n}{accuracy}\PY{o}{=}\PY{p}{[}\PY{p}{]}
+         \PY{n}{num\PYZus{}iteration}\PY{o}{=}\PY{l+m+mi}{0}
+         \PY{k}{while} \PY{o+ow}{not} \PY{n}{np}\PY{o}{.}\PY{n}{array\PYZus{}equal}\PY{p}{(}\PY{n}{pre\PYZus{}average\PYZus{}image}\PY{p}{,}\PY{n}{average\PYZus{}image}\PY{p}{)}\PY{p}{:}
+             \PY{n}{assignLabel}\PY{p}{(}\PY{n}{xy}\PY{p}{,}\PY{n}{average\PYZus{}image}\PY{p}{,}\PY{n}{cluster\PYZus{}label}\PY{p}{,}\PY{n}{distance}\PY{p}{)}
+             \PY{n}{pre\PYZus{}average\PYZus{}image}\PY{o}{=}\PY{n}{average\PYZus{}image}
+             \PY{n}{average\PYZus{}image}\PY{o}{=}\PY{n}{computeCentroid}\PY{p}{(}\PY{n}{k}\PY{p}{,}\PY{n}{xy}\PY{p}{,}\PY{n}{cluster\PYZus{}label}\PY{p}{)}
+             \PY{n}{energy}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{computeEnergy}\PY{p}{(}\PY{n}{distance}\PY{p}{)}\PY{p}{)}
+             \PY{n}{num\PYZus{}iteration}\PY{o}{+}\PY{o}{=}\PY{l+m+mi}{1}
+             \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{k}\PY{p}{)}\PY{p}{:}
+                 \PY{n+nb}{print}\PY{p}{(}\PY{n}{num\PYZus{}iteration} \PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Centroid}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{i}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{average\PYZus{}image}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{,}\PY{n}{average\PYZus{}image}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{)}
+         \PY{n}{average\PYZus{}image}\PY{o}{=}\PY{n}{visualization}\PY{p}{(}\PY{n}{average\PYZus{}image}\PY{p}{,}\PY{n}{k}\PY{p}{)}
+         \PY{n}{plotCentoidImages}\PY{p}{(}\PY{n}{average\PYZus{}image}\PY{p}{,}\PY{n}{cluster\PYZus{}label}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+1 Centroid 1 : 62.1960037319235 173.20618877313015
+1 Centroid 2 : 177.6667999086341 136.20049109182276
+1 Centroid 3 : 184.60324483775813 40.17551622418879
+1 Centroid 4 : 83.4605323660144 52.615337454656924
+2 Centroid 1 : 60.86732839368097 169.7096323221026
+2 Centroid 2 : 173.87522976251745 153.83545327549444
+2 Centroid 3 : 179.51489572989075 42.99801390268123
+2 Centroid 4 : 67.397558314009 54.79648069840404
+3 Centroid 1 : 58.48413350257597 169.35212424400805
+3 Centroid 2 : 171.1133133881825 160.31024682124158
+3 Centroid 3 : 174.29551820728292 48.11814725890356
+3 Centroid 4 : 61.78270589932208 56.07457089283139
+4 Centroid 1 : 57.08231565929819 169.26294635956097
+4 Centroid 2 : 169.60597764088524 163.68575557076585
+4 Centroid 3 : 171.47529369563267 51.253340507577796
+4 Centroid 4 : 58.95264062149847 56.49107342944648
+5 Centroid 1 : 56.34365665775822 169.12977519257979
+5 Centroid 2 : 168.8332691863598 165.56185051189286
+5 Centroid 3 : 170.0027961362481 53.07015760040671
+5 Centroid 4 : 57.47597254004577 56.53569794050343
+6 Centroid 1 : 55.97142857142857 168.9612979817966
+6 Centroid 2 : 168.5052778640174 166.6144830797889
+6 Centroid 3 : 169.20942666776344 54.11532450440075
+6 Centroid 4 : 56.7379720441733 56.423893736968104
+7 Centroid 1 : 55.85509427982887 168.73538266518776
+7 Centroid 2 : 168.39676334922993 167.31741067938395
+7 Centroid 3 : 168.7275664324368 54.8210160730151
+7 Centroid 4 : 56.271374016054864 56.21744213233575
+8 Centroid 1 : 55.79571768437748 168.62038065027755
+8 Centroid 2 : 168.1978953981467 167.7393591958536
+8 Centroid 3 : 168.59846547314578 55.23529411764706
+8 Centroid 4 : 56.0012530346934 56.12029133056622
+9 Centroid 1 : 55.75111111111111 168.62444444444444
+9 Centroid 2 : 168.2511013215859 167.87885462555067
+9 Centroid 3 : 168.4190415538927 55.43265403598153
+9 Centroid 4 : 55.92094737667634 56.06705356442632
+10 Centroid 1 : 55.75111111111111 168.62444444444444
+10 Centroid 2 : 168.2511013215859 167.87885462555067
+10 Centroid 3 : 168.38313444709627 55.411058074781224
+10 Centroid 4 : 55.88574119124225 56.08875461037432
+11 Centroid 1 : 55.75111111111111 168.62444444444444
+11 Centroid 2 : 168.2511013215859 167.87885462555067
+11 Centroid 3 : 168.3472730163778 55.39457783431388
+11 Centroid 4 : 55.85049077345897 56.10545740086376
+12 Centroid 1 : 55.75111111111111 168.62444444444444
+12 Centroid 2 : 168.2511013215859 167.87885462555067
+12 Centroid 3 : 168.31593166468016 55.38434644417958
+12 Centroid 4 : 55.8196103079824 56.11596480201131
+13 Centroid 1 : 55.75111111111111 168.62444444444444
+13 Centroid 2 : 168.2511013215859 167.87885462555067
+13 Centroid 3 : 168.29356632247817 55.379428117553616
+13 Centroid 4 : 55.7975320286096 56.12111923288533
+14 Centroid 1 : 55.75111111111111 168.62444444444444
+14 Centroid 2 : 168.2511013215859 167.87885462555067
+14 Centroid 3 : 168.28015564202335 55.37743190661479
+14 Centroid 4 : 55.78427672955975 56.123270440251574
+15 Centroid 1 : 55.75111111111111 168.62444444444444
+15 Centroid 2 : 168.2511013215859 167.87885462555067
+15 Centroid 3 : 168.2712187375943 55.37649861055974
+15 Centroid 4 : 55.775436389369396 56.12431199874194
+16 Centroid 1 : 55.75111111111111 168.62444444444444
+16 Centroid 2 : 168.2511013215859 167.87885462555067
+16 Centroid 3 : 168.2622846709534 55.37588314678098
+16 Centroid 4 : 55.76659326832337 56.12503932054105
+17 Centroid 1 : 55.75111111111111 168.62444444444444
+17 Centroid 2 : 168.2511013215859 167.87885462555067
+17 Centroid 3 : 168.25781870138118 55.37569455469122
+17 Centroid 4 : 55.7621706645694 56.1252850963429
+18 Centroid 1 : 55.75111111111111 168.62444444444444
+18 Centroid 2 : 168.2511013215859 167.87885462555067
+18 Centroid 3 : 168.25335344074927 55.37558536391777
+18 Centroid 4 : 55.75774736510933 56.1254522573541
+19 Centroid 1 : 55.75111111111111 168.62444444444444
+19 Centroid 2 : 168.2511013215859 167.87885462555067
+19 Centroid 3 : 168.25335344074927 55.37558536391777
+19 Centroid 4 : 55.75774736510933 56.1254522573541
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_16_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    Use L1-norm
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}70}]:} \PY{k}{def} \PY{n+nf}{Distance}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{y}\PY{p}{)}\PY{p}{:}
+             \PY{n}{d} \PY{o}{=} \PY{n+nb}{abs}\PY{p}{(}\PY{n}{x} \PY{o}{\PYZhy{}} \PY{n}{y}\PY{p}{)}
+             \PY{n}{s} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{d}\PY{p}{)}
+             \PY{k}{return}\PY{p}{(}\PY{n}{s}\PY{p}{)}
+\end{Verbatim}
+
+
+    K=2
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}71}]:} \PY{n}{k}\PY{p}{,}\PY{n}{cluster\PYZus{}label}\PY{p}{,}\PY{n}{average\PYZus{}image}\PY{p}{,}\PY{n}{distance}\PY{o}{=}\PY{n}{generateCluster}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,} \PY{n}{count}\PY{p}{)} \PY{c+c1}{\PYZsh{}2 \PYZhy{} cluster}
+         \PY{n}{initializeLabel}\PY{p}{(}\PY{n}{k}\PY{p}{,}\PY{n}{cluster\PYZus{}label}\PY{p}{)}
+         \PY{n}{average\PYZus{}image}\PY{o}{=}\PY{n}{computeCentroid}\PY{p}{(}\PY{n}{k}\PY{p}{,}\PY{n}{xy}\PY{p}{,}\PY{n}{cluster\PYZus{}label}\PY{p}{)}
+         \PY{n}{pre\PYZus{}average\PYZus{}image}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{,} \PY{n}{dtype}\PY{o}{=}\PY{n+nb}{int}\PY{p}{)}
+         \PY{n}{energy}\PY{o}{=}\PY{p}{[}\PY{p}{]}
+         \PY{n}{accuracy}\PY{o}{=}\PY{p}{[}\PY{p}{]}
+         \PY{n}{num\PYZus{}iteration}\PY{o}{=}\PY{l+m+mi}{0}
+         \PY{k}{while} \PY{o+ow}{not} \PY{n}{np}\PY{o}{.}\PY{n}{array\PYZus{}equal}\PY{p}{(}\PY{n}{pre\PYZus{}average\PYZus{}image}\PY{p}{,}\PY{n}{average\PYZus{}image}\PY{p}{)}\PY{p}{:}
+             \PY{n}{assignLabel}\PY{p}{(}\PY{n}{xy}\PY{p}{,}\PY{n}{average\PYZus{}image}\PY{p}{,}\PY{n}{cluster\PYZus{}label}\PY{p}{,}\PY{n}{distance}\PY{p}{)}
+             \PY{n}{pre\PYZus{}average\PYZus{}image}\PY{o}{=}\PY{n}{average\PYZus{}image}
+             \PY{n}{average\PYZus{}image}\PY{o}{=}\PY{n}{computeCentroid}\PY{p}{(}\PY{n}{k}\PY{p}{,}\PY{n}{xy}\PY{p}{,}\PY{n}{cluster\PYZus{}label}\PY{p}{)}
+             \PY{n}{energy}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{computeEnergy}\PY{p}{(}\PY{n}{distance}\PY{p}{)}\PY{p}{)}
+             \PY{n}{num\PYZus{}iteration}\PY{o}{+}\PY{o}{=}\PY{l+m+mi}{1}
+             \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{k}\PY{p}{)}\PY{p}{:}
+                 \PY{n+nb}{print}\PY{p}{(}\PY{n}{num\PYZus{}iteration} \PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Centroid}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{i}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{average\PYZus{}image}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{,}\PY{n}{average\PYZus{}image}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{)}
+         \PY{n}{average\PYZus{}image}\PY{o}{=}\PY{n}{visualization}\PY{p}{(}\PY{n}{average\PYZus{}image}\PY{p}{,}\PY{n}{k}\PY{p}{)}
+         \PY{n}{plotCentoidImages}\PY{p}{(}\PY{n}{average\PYZus{}image}\PY{p}{,}\PY{n}{cluster\PYZus{}label}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+1 Centroid 1 : 55.752222178327344 111.75000987634812
+1 Centroid 2 : 168.25 112.25
+2 Centroid 1 : 55.752222178327344 111.75000987634812
+2 Centroid 2 : 168.25 112.25
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_20_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    K=3
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}74}]:} \PY{n}{k}\PY{p}{,}\PY{n}{cluster\PYZus{}label}\PY{p}{,}\PY{n}{average\PYZus{}image}\PY{p}{,}\PY{n}{distance}\PY{o}{=}\PY{n}{generateCluster}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{,} \PY{n}{count}\PY{p}{)} \PY{c+c1}{\PYZsh{}3 \PYZhy{} cluster}
+         \PY{n}{initializeLabel}\PY{p}{(}\PY{n}{k}\PY{p}{,}\PY{n}{cluster\PYZus{}label}\PY{p}{)}
+         \PY{n}{average\PYZus{}image}\PY{o}{=}\PY{n}{computeCentroid}\PY{p}{(}\PY{n}{k}\PY{p}{,}\PY{n}{xy}\PY{p}{,}\PY{n}{cluster\PYZus{}label}\PY{p}{)}
+         \PY{n}{pre\PYZus{}average\PYZus{}image}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{,} \PY{n}{dtype}\PY{o}{=}\PY{n+nb}{int}\PY{p}{)}
+         \PY{n}{energy}\PY{o}{=}\PY{p}{[}\PY{p}{]}
+         \PY{n}{accuracy}\PY{o}{=}\PY{p}{[}\PY{p}{]}
+         \PY{n}{num\PYZus{}iteration}\PY{o}{=}\PY{l+m+mi}{0}
+         \PY{k}{while} \PY{o+ow}{not} \PY{n}{np}\PY{o}{.}\PY{n}{array\PYZus{}equal}\PY{p}{(}\PY{n}{pre\PYZus{}average\PYZus{}image}\PY{p}{,}\PY{n}{average\PYZus{}image}\PY{p}{)}\PY{p}{:}
+             \PY{n}{assignLabel}\PY{p}{(}\PY{n}{xy}\PY{p}{,}\PY{n}{average\PYZus{}image}\PY{p}{,}\PY{n}{cluster\PYZus{}label}\PY{p}{,}\PY{n}{distance}\PY{p}{)}
+             \PY{n}{pre\PYZus{}average\PYZus{}image}\PY{o}{=}\PY{n}{average\PYZus{}image}
+             \PY{n}{average\PYZus{}image}\PY{o}{=}\PY{n}{computeCentroid}\PY{p}{(}\PY{n}{k}\PY{p}{,}\PY{n}{xy}\PY{p}{,}\PY{n}{cluster\PYZus{}label}\PY{p}{)}
+             \PY{n}{energy}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{computeEnergy}\PY{p}{(}\PY{n}{distance}\PY{p}{)}\PY{p}{)}
+             \PY{n}{num\PYZus{}iteration}\PY{o}{+}\PY{o}{=}\PY{l+m+mi}{1}
+             \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{k}\PY{p}{)}\PY{p}{:}
+                 \PY{n+nb}{print}\PY{p}{(}\PY{n}{num\PYZus{}iteration} \PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Centroid}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{i}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{average\PYZus{}image}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{,}\PY{n}{average\PYZus{}image}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{)}
+         \PY{n}{average\PYZus{}image}\PY{o}{=}\PY{n}{visualization}\PY{p}{(}\PY{n}{average\PYZus{}image}\PY{p}{,}\PY{n}{k}\PY{p}{)}
+         \PY{n}{plotCentoidImages}\PY{p}{(}\PY{n}{average\PYZus{}image}\PY{p}{,}\PY{n}{cluster\PYZus{}label}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+1 Centroid 1 : 112.0 168.5
+1 Centroid 2 : 112.0 55.5
+1 Centroid 3 : 112.0 112.0
+2 Centroid 1 : 112.0 182.5
+2 Centroid 2 : 112.0 41.5
+2 Centroid 3 : 112.0 112.0
+3 Centroid 1 : 112.0 186.0
+3 Centroid 2 : 112.0 38.0
+3 Centroid 3 : 112.0 112.0
+4 Centroid 1 : 112.0 187.0
+4 Centroid 2 : 112.0 37.0
+4 Centroid 3 : 112.0 112.0
+5 Centroid 1 : 112.0 187.0
+5 Centroid 2 : 112.0 37.0
+5 Centroid 3 : 112.0 112.0
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_22_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    K=4
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}75}]:} \PY{n}{k}\PY{p}{,}\PY{n}{cluster\PYZus{}label}\PY{p}{,}\PY{n}{average\PYZus{}image}\PY{p}{,}\PY{n}{distance}\PY{o}{=}\PY{n}{generateCluster}\PY{p}{(}\PY{l+m+mi}{4}\PY{p}{,} \PY{n}{count}\PY{p}{)} \PY{c+c1}{\PYZsh{}4 \PYZhy{} cluster}
+         \PY{n}{initializeLabel}\PY{p}{(}\PY{n}{k}\PY{p}{,}\PY{n}{cluster\PYZus{}label}\PY{p}{)}
+         \PY{n}{average\PYZus{}image}\PY{o}{=}\PY{n}{computeCentroid}\PY{p}{(}\PY{n}{k}\PY{p}{,}\PY{n}{xy}\PY{p}{,}\PY{n}{cluster\PYZus{}label}\PY{p}{)}
+         \PY{n}{pre\PYZus{}average\PYZus{}image}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{,} \PY{n}{dtype}\PY{o}{=}\PY{n+nb}{int}\PY{p}{)}
+         \PY{n}{energy}\PY{o}{=}\PY{p}{[}\PY{p}{]}
+         \PY{n}{accuracy}\PY{o}{=}\PY{p}{[}\PY{p}{]}
+         \PY{n}{num\PYZus{}iteration}\PY{o}{=}\PY{l+m+mi}{0}
+         \PY{k}{while} \PY{o+ow}{not} \PY{n}{np}\PY{o}{.}\PY{n}{array\PYZus{}equal}\PY{p}{(}\PY{n}{pre\PYZus{}average\PYZus{}image}\PY{p}{,}\PY{n}{average\PYZus{}image}\PY{p}{)}\PY{p}{:}
+             \PY{n}{assignLabel}\PY{p}{(}\PY{n}{xy}\PY{p}{,}\PY{n}{average\PYZus{}image}\PY{p}{,}\PY{n}{cluster\PYZus{}label}\PY{p}{,}\PY{n}{distance}\PY{p}{)}
+             \PY{n}{pre\PYZus{}average\PYZus{}image}\PY{o}{=}\PY{n}{average\PYZus{}image}
+             \PY{n}{average\PYZus{}image}\PY{o}{=}\PY{n}{computeCentroid}\PY{p}{(}\PY{n}{k}\PY{p}{,}\PY{n}{xy}\PY{p}{,}\PY{n}{cluster\PYZus{}label}\PY{p}{)}
+             \PY{n}{energy}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{computeEnergy}\PY{p}{(}\PY{n}{distance}\PY{p}{)}\PY{p}{)}
+             \PY{n}{num\PYZus{}iteration}\PY{o}{+}\PY{o}{=}\PY{l+m+mi}{1}
+             \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{k}\PY{p}{)}\PY{p}{:}
+                 \PY{n+nb}{print}\PY{p}{(}\PY{n}{num\PYZus{}iteration} \PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Centroid}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{i}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{average\PYZus{}image}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{,}\PY{n}{average\PYZus{}image}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{)}
+         \PY{n}{average\PYZus{}image}\PY{o}{=}\PY{n}{visualization}\PY{p}{(}\PY{n}{average\PYZus{}image}\PY{p}{,}\PY{n}{k}\PY{p}{)}
+         \PY{n}{plotCentoidImages}\PY{p}{(}\PY{n}{average\PYZus{}image}\PY{p}{,}\PY{n}{cluster\PYZus{}label}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+1 Centroid 1 : 168.0 168.5
+1 Centroid 2 : 168.0 112.0
+1 Centroid 3 : 168.0 55.5
+1 Centroid 4 : 55.5 112.0
+2 Centroid 1 : 156.1652386780906 183.65361077111382
+2 Centroid 2 : 168.0 112.0
+2 Centroid 3 : 156.1652386780906 40.34638922888617
+2 Centroid 4 : 47.65703022339028 112.0
+3 Centroid 1 : 147.27062505433366 187.39789620099106
+3 Centroid 2 : 170.84731643460668 112.0
+3 Centroid 3 : 147.27062505433366 36.60210379900895
+3 Centroid 4 : 44.03944629475437 112.0
+4 Centroid 1 : 141.49614791987673 188.2477315528163
+4 Centroid 2 : 174.75952145757876 112.0
+4 Centroid 3 : 141.49614791987673 35.7522684471837
+4 Centroid 4 : 42.52617079889807 112.0
+5 Centroid 1 : 138.18356835261335 188.09685046018745
+5 Centroid 2 : 177.83433219178082 112.0
+5 Centroid 3 : 138.18356835261335 35.903149539812546
+5 Centroid 4 : 41.790281329923275 112.0
+6 Centroid 1 : 136.20891271569778 187.8744345786564
+6 Centroid 2 : 179.70794220018985 112.0
+6 Centroid 3 : 136.20891271569778 36.12556542134361
+6 Centroid 4 : 41.35192263145703 112.0
+7 Centroid 1 : 134.93253968253967 187.38657407407408
+7 Centroid 2 : 181.23193473193473 112.0
+7 Centroid 3 : 134.93253968253967 36.613425925925924
+7 Centroid 4 : 40.90879670491321 112.0
+8 Centroid 1 : 134.3706322453342 187.0437392090767
+8 Centroid 2 : 182.27738158594997 112.0
+8 Centroid 3 : 134.3706322453342 36.956260790923295
+8 Centroid 4 : 40.7479886417416 112.0
+9 Centroid 1 : 134.1060693403607 186.9778473194433
+9 Centroid 2 : 182.7552729199788 112.0
+9 Centroid 3 : 134.1060693403607 37.0221526805567
+9 Centroid 4 : 40.7479886417416 112.0
+10 Centroid 1 : 133.58037902303545 186.8809834994282
+10 Centroid 2 : 182.7552729199788 112.0
+10 Centroid 3 : 133.58037902303545 37.1190165005718
+10 Centroid 4 : 40.41194780318448 112.0
+11 Centroid 1 : 133.32016036655213 186.8138602520046
+11 Centroid 2 : 183.21899736147756 112.0
+11 Centroid 3 : 133.32016036655213 37.18613974799542
+11 Centroid 4 : 40.41194780318448 112.0
+12 Centroid 1 : 133.32016036655213 186.8138602520046
+12 Centroid 2 : 183.21899736147756 112.0
+12 Centroid 3 : 133.32016036655213 37.18613974799542
+12 Centroid 4 : 40.41194780318448 112.0
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_24_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
